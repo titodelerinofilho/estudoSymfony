@@ -59,11 +59,12 @@ abstract class BaseController extends AbstractController
         return new JsonResponse($entidadeExistente);
     }
 
-    public function buscarTodos(): Response
+    public function buscarTodos(Request $request): Response
     {
-        $entityList = $this->repository->findAll();
+        $infoOrder = $request->query->all()['sort'] ?? null;
+        $lista = $this->repository->findBy([], $infoOrder);
 
-        return new JsonResponse($entityList);
+        return new JsonResponse($lista);
     }
 
     public function buscarUm(int $id): Response
